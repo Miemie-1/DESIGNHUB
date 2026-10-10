@@ -10,6 +10,8 @@ import {
   ProjectsIcon, ReportsIcon, SearchIcon, SettingsIcon,
 } from '@/components/Icons';
 
+
+
 const MAIN_NAV = [
   { href: '/dashboard', label: 'Dashboard', Icon: DashboardIcon },
   { href: '/clients', label: 'Clients', Icon: ClientsIcon },
