@@ -1,4 +1,8 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+// By default the browser calls "/api" on the site's own domain and next.config.mjs forwards it to the
+// backend (server-side `API_URL`), so no NEXT_PUBLIC_ variable is needed and there is no CORS.
+// NEXT_PUBLIC_API_URL still works as an optional override (with or without a trailing "/api").
+const OVERRIDE = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '');
+const API_URL = OVERRIDE ? OVERRIDE.replace(/\/api$/, '') + '/api' : '/api';
 
 export const getToken = () =>
   typeof window === 'undefined' ? null : localStorage.getItem('designhub_token');
