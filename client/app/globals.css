@@ -208,7 +208,11 @@ strong { font-weight: 600; }
 }
 .topbar h1 { font-size: 26px; line-height: 1.15; }
 .topbar .subtitle { color: var(--muted); font-size: 13px; margin-top: 2px; }
-.topbar-right { display: flex; align-items: center; gap: 10px; }
+.topbar-title { margin-right: auto; min-width: 0; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.mobile-brand { display: none; }
+a.avatar { color: var(--on-primary); transition: transform var(--dur-fast) var(--ease-out); }
+a.avatar:active { transform: scale(0.94); }
 
 .search {
   display: flex; align-items: center; gap: 8px; margin: 0;
@@ -377,7 +381,7 @@ button.small::after, .btn.small::after { content: ''; position: absolute; inset:
 
 /* ---------- Print ---------- */
 @media print {
-  .sidebar, .topbar-right, .no-print { display: none !important; }
+  .sidebar, .search, .topbar-actions, .no-print { display: none !important; }
   .topbar { position: static; background: none; backdrop-filter: none; padding: 0 0 12px; }
   .main { padding: 0; max-width: none; }
   body { background: #fff; color: #000; }

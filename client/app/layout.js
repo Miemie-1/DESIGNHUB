@@ -7,6 +7,12 @@ export const metadata = {
   description: 'Graphic design project, client and payment management system',
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover', // lets the bottom tab bar respect the iPhone home-indicator inset
+};
+
 // Same font pairing as the someScheme client: Fraunces for display/headings, Inter for UI text.
 const fraunces = Fraunces({
   subsets: ['latin'],

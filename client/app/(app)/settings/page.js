@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { api, getUser, initialsOf, updateStoredUser } from '@/lib/api';
+import { useRouter } from 'next/navigation';
+import { api, clearSession, getUser, initialsOf, updateStoredUser } from '@/lib/api';
 import { applyTheme, getStoredTheme } from '@/lib/theme';
 import PasswordInput from '@/components/PasswordInput';
 
@@ -70,6 +71,7 @@ function ProfileTab() {
 }
 
 function AccountTab() {
+  const router = useRouter();
   const [theme, setTheme] = useState('system');
 
   useEffect(() => {
@@ -101,6 +103,18 @@ function AccountTab() {
           </button>
         ))}
       </div>
+
+      <div className="card-title" style={{ marginTop: 36 }}>Session</div>
+      <button
+        type="button"
+        className="secondary"
+        onClick={() => {
+          clearSession();
+          router.replace('/login');
+        }}
+      >
+        Log out
+      </button>
     </>
   );
 }

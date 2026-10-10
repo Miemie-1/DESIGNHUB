@@ -17,7 +17,7 @@ const MAIN_NAV = [
   { href: '/payments', label: 'Payments', Icon: PaymentsIcon },
   { href: '/reports', label: 'Reports', Icon: ReportsIcon },
 ];
-const SYSTEM_NAV = [{ href: '/settings', label: 'Settings', Icon: SettingsIcon }];
+const SYSTEM_NAV = [{ href: '/settings', label: 'Settings', Icon: SettingsIcon, system: true }];
 
 // Page title + subtitle shown in the top bar (first match wins).
 const PAGE_META = [
@@ -75,8 +75,13 @@ export default function AppShell({ children }) {
     router.push(q.trim() ? `/clients?search=${encodeURIComponent(q.trim())}` : '/clients');
   };
 
-  const renderLink = ({ href, label, Icon }) => (
-    <Link key={href} href={href} className={pathname.startsWith(href) ? 'active' : ''}>
+  const renderLink = ({ href, label, Icon, system }) => (
+    <Link
+      key={href}
+      href={href}
+      className={[pathname.startsWith(href) ? 'active' : '', system ? 'system-link' : ''].join(' ').trim()}
+      aria-current={pathname.startsWith(href) ? 'page' : undefined}
+    >
       <Icon />
       <span>{label}</span>
     </Link>
@@ -86,7 +91,7 @@ export default function AppShell({ children }) {
     <div className="shell">
       <aside className="sidebar">
         <div className="brand">DesignHub</div>
-        <nav className="nav">
+        <nav className="nav" aria-label="Main">
           <div className="nav-label">Main menu</div>
           {MAIN_NAV.map(renderLink)}
           <div className="nav-label spaced">System</div>
@@ -106,23 +111,29 @@ export default function AppShell({ children }) {
 
       <div className="content">
         <header className="topbar">
-          <div>
+          <div className="mobile-brand" aria-hidden="true">DesignHub</div>
+
+          <div className="topbar-title">
             <h1>{title}</h1>
             <div className="subtitle">{subtitle}</div>
           </div>
-          <div className="topbar-right">
-            <form className="search" onSubmit={search} role="search">
-              <SearchIcon />
-              <input
-                placeholder="Search..."
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                aria-label="Search clients"
-              />
-            </form>
+
+          <form className="search" onSubmit={search} role="search">
+            <SearchIcon />
+            <input
+              placeholder="Search..."
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              aria-label="Search clients"
+            />
+          </form>
+
+          <div className="topbar-actions">
             <ThemeToggle />
             <button className="icon-btn" aria-label="Notifications" title="Notifications"><BellIcon /></button>
-            <div className="avatar" title={user?.name}>{initialsOf(user?.name)}</div>
+            <Link href="/settings" className="avatar" aria-label="Account settings" title={user?.name}>
+              {initialsOf(user?.name)}
+            </Link>
           </div>
         </header>
         <main key={pathname} className="main">{children}</main>
